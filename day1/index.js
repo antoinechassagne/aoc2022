@@ -5,8 +5,9 @@ const path = require("path");
   const data = await fs.readFile(path.resolve(__dirname, "./input.txt"), {
     encoding: "utf8",
   });
-  const max = Math.max(
-    ...data.split("\n").reduce((acc, item, index, items) => {
+  const result = data
+    .split("\n")
+    .reduce((acc, item, index, items) => {
       if (!item) return acc;
       if (index === 0 || (acc.length && !items[index - 1])) {
         acc.push(parseInt(item, 10));
@@ -18,6 +19,8 @@ const path = require("path");
       }
       return acc;
     }, [])
-  );
-  console.log(max);
+    .sort((a, b) => b - a)
+    .slice(0, 3)
+    .reduce((total, item) => (total += item), 0);
+  console.log(result);
 })();
